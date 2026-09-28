@@ -1,0 +1,86 @@
+{
+  "key": "assay-test-key-1",
+  "vectors": [
+    {
+      "name": "V1 · generated (riftveil-report-v1)",
+      "fields": {
+        "id": "XT-260101-000000-0000-0000-0000",
+        "protocol": "1.3.3",
+        "model": "test-model",
+        "project": "Project text.",
+        "context": "",
+        "report": "Report text."
+      },
+      "input": "{\"v\":1,\"id\":\"XT-260101-000000-0000-0000-0000\",\"protocol\":\"1.3.3\",\"model\":\"test-model\",\"project\":\"Project text.\",\"context\":\"\",\"report\":\"Report text.\"}",
+      "fingerprint": "abc5ba903a307668121b1fdd0e01ce784069189c1b255e481f65f5e54ee765fc",
+      "label": "riftveil-seal-v1",
+      "hmac_input": "riftveil-seal-v1|XT-260101-000000-0000-0000-0000|abc5ba903a307668121b1fdd0e01ce784069189c1b255e481f65f5e54ee765fc",
+      "seal": "S1-2ZQR-3N0J-PRKP-8G33-Q2ZT-ZPZA-QDFN-MEPH"
+    },
+    {
+      "name": "V2 · registered (riftveil-content-v1)",
+      "id": "XT-260101-000001-0000-0000-0001",
+      "fields": {
+        "assistant": "Microsoft 365 Copilot",
+        "project": "Project text.",
+        "context": "CFO",
+        "report": "Report text."
+      },
+      "input": "{\"v\":1,\"assistant\":\"Microsoft 365 Copilot\",\"project\":\"Project text.\",\"context\":\"CFO\",\"report\":\"Report text.\"}",
+      "fingerprint": "2ae571cf5ba080714e2d04e867a05b09a36f4157ddbdd17d3a1574366af0f9fd",
+      "label": "riftveil-register-v1",
+      "hmac_input": "riftveil-register-v1|XT-260101-000001-0000-0000-0001|2ae571cf5ba080714e2d04e867a05b09a36f4157ddbdd17d3a1574366af0f9fd",
+      "seal": "S1-7CBT-7WG0-0HBP-2336-45NX-2PDS-HE57-C6DK"
+    },
+    {
+      "name": "V3 · non-ASCII text and line break",
+      "fields": {
+        "id": "XT-260101-000002-0000-0000-0002",
+        "protocol": "1.3.3",
+        "model": "test-model",
+        "project": "Décision « nordique » : 2,4 M€ — test\nligne 2",
+        "context": "Directeur financier",
+        "report": "Rapport : ✓"
+      },
+      "input": "{\"v\":1,\"id\":\"XT-260101-000002-0000-0000-0002\",\"protocol\":\"1.3.3\",\"model\":\"test-model\",\"project\":\"Décision « nordique » : 2,4 M€ — test\\nligne 2\",\"context\":\"Directeur financier\",\"report\":\"Rapport : ✓\"}",
+      "fingerprint": "14971ae9adf597868bd4ab39783cc64c7ebff23e38d7a4f2f80d11df9d212f55",
+      "label": "riftveil-seal-v1",
+      "hmac_input": "riftveil-seal-v1|XT-260101-000002-0000-0000-0002|14971ae9adf597868bd4ab39783cc64c7ebff23e38d7a4f2f80d11df9d212f55",
+      "seal": "S1-CW1S-3W97-PB70-MKYQ-NTD5-JFQK-P8ES-B883"
+    },
+    {
+      "name": "V4 · follow-up (riftveil-decision-v1), bound to V1",
+      "follow_up": {
+        "verified_by": {
+          "last_name": "Doe",
+          "first_name": "Jane",
+          "role": "CFO"
+        },
+        "checked": "Figures re-checked.",
+        "questions": [
+          {
+            "n": 1,
+            "question": "Q?",
+            "suggested_owner": "CFO",
+            "assigned_to": "John Roe"
+          }
+        ],
+        "decision": "conditions",
+        "conditions": "Exit clause first.",
+        "place": "",
+        "signature": {
+          "method": "typed",
+          "typed": "Jane Doe",
+          "image": ""
+        }
+      },
+      "report_fingerprint": "abc5ba903a307668121b1fdd0e01ce784069189c1b255e481f65f5e54ee765fc",
+      "input": "{\"v\":1,\"id\":\"XT-260101-000000-0000-0000-0000\",\"report_fingerprint\":\"abc5ba903a307668121b1fdd0e01ce784069189c1b255e481f65f5e54ee765fc\",\"verified_by\":{\"last_name\":\"Doe\",\"first_name\":\"Jane\",\"role\":\"CFO\"},\"checked\":\"Figures re-checked.\",\"questions\":[{\"n\":1,\"question\":\"Q?\",\"suggested_owner\":\"CFO\",\"assigned_to\":\"John Roe\"}],\"decision\":\"conditions\",\"conditions\":\"Exit clause first.\",\"place\":\"\",\"signature\":{\"method\":\"typed\",\"typed\":\"Jane Doe\",\"image\":\"\"}}",
+      "fingerprint": "bfdb75b1260feca991f6f59862c3cdc7e3910f424612244e9fdeb999a951d82e",
+      "label": "riftveil-decision-v1",
+      "sealed_at": "2026-01-01T00:05:00Z",
+      "hmac_input": "riftveil-decision-v1|XT-260101-000000-0000-0000-0000|bfdb75b1260feca991f6f59862c3cdc7e3910f424612244e9fdeb999a951d82e|2026-01-01T00:05:00Z",
+      "seal": "S1-FEK5-BRSD-MC99-S95R-2V46-C40R-CHYM-ARK2"
+    }
+  ]
+}
