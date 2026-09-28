@@ -1,0 +1,31 @@
+{
+  "format": "assay-record",
+  "version": "0.1-draft",
+  "record_id": "XT-260927-151012-4HNP-R8TW-C1VA",
+  "issuer": "XT",
+  "origin": "registered",
+  "issued_at": "2026-09-27T15:10:12Z",
+  "assessment": {
+    "protocol": "",
+    "model": "",
+    "assistant": "Microsoft 365 Copilot",
+    "language": "en"
+  },
+  "content": {
+    "project": "Based on our analysis, we recommend consolidating our three cloud vendors into one five-year contract from Q1 2027. The chosen vendor offers a 22% discount in year one, full migration support and a single point of contact. Savings are estimated at EUR 1.4M over five years.",
+    "context": "CFO, board decision next month",
+    "report": "**Record**\n- Triage: CRITICAL · Levels 0, 1, 2, 3, 4\n- Findings: 3 · CRITICAL 1 · HIGH 1 · MODERATE 1 · LOW 0\n- Assumptions: 2 with a named verifier · 0 without\n- Questions: 2 · 2 with an owner · 0 without\n- Highest-value question: \"What does leaving the five-year contract cost if the price rises after year one?\"\n- Independence: separate session, same model family\n\n## 1. Context and triage\nCriteria: reversibility HIGH · people affected MODERATE · financial commitment HIGH → two criteria at HIGH or above → CRITICAL.\n\n## 2. What holds up\n- The recommendation names one vendor, one start date and one contract length: it can be checked.\n\n## 3. What deserves scrutiny\n#### Year-one discount presented as the saving · CRITICAL\nObserved: \"a 22% discount in year one\" supports \"savings are estimated at EUR 1.4M over five years\".\nWhy it matters: a discount limited to year one says nothing about years two to five.\nWhat you should check: the price schedule for every year of the contract.\n\n#### Exit cost not mentioned · HIGH\nObserved: \"one five-year contract\" with no exit terms.\nWhy it matters: a single vendor for five years is hard to leave if prices or service change.\nWhat you should check: exit clauses, notice periods and data return terms.\n\n#### Migration effort reduced to \"full migration support\" · MODERATE\nObserved: \"full migration support and a single point of contact\".\nWhy it matters: support from the vendor does not cover the internal work.\nWhat you should check: which workloads can move, when, and at what internal cost.\n\n## 4. Assumptions the project relies on\n1. Prices after year one stay close to year one. Who can verify: Procurement.\n2. All workloads can move before the current contracts end. Who can verify: CIO.\n\n## 5. Questions before you decide\n1. What does leaving the five-year contract cost if the price rises after year one? Owner: Procurement\n2. Which workloads cannot move before the old contracts end? Owner: CIO\n\nNo verdict. The decision is yours.\n"
+  },
+  "proof": {
+    "fingerprint": {
+      "alg": "sha-256",
+      "profile": "riftveil-content-v1",
+      "value": "959aa471452b26398cd313444c1193ac09712fb7c28ba103e6b47ddb36d1bc95"
+    },
+    "seal": {
+      "value": "S1-ZF4Y-594M-2V1K-NX3D-3CP0-Q3A0-0SJC-DBH5",
+      "verify": "https://riftveil.ai/api/verify"
+    }
+  },
+  "notice": "Illustrative example. XT is the prefix reserved for tests: this record was not issued by any issuer and its seals are not valid."
+}
