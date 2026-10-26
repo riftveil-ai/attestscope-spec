@@ -1,0 +1,190 @@
+{
+  "format": "attestscope",
+  "version": "0.1.1",
+  "record_id": "XT-261026-143205-7K3M-Q9XD-2B8F",
+  "issuer": "XT",
+  "origin": "generated",
+  "issued_at": "2026-10-26T14:32:05Z",
+  "assessment": {
+    "protocol": "1.0.0",
+    "model": "claude-sonnet-5",
+    "assistant": "riftveil.ai",
+    "language": "en"
+  },
+  "content": {
+    "project": "We recommend consolidating our three cloud vendors into one five-year contract from Q1 2027. The chosen vendor offers a 22% discount in year one, full migration support and a single point of contact. Savings are estimated at EUR 1.4M over five years.",
+    "context": "Chief Financial Officer, board decision next month.",
+    "report": "## Record\n- Triage: CRITICAL · examined: question, answer, reasoning, perspective, applicability\n- Findings: 3, by impact CRITICAL: 1 · HIGH: 2 · MODERATE: 0 · LOW: 0\n- Assumptions: 4 with a named verifier · 0 without\n- Questions: 5 with an owner · 1 without\n- Most useful question: \"What does leaving the contract cost if the price rises after the first year?\"\n- Independence: not stated by the user, to be confirmed by the signer\n\n## 1. Context and triage\nThis project is read as a procurement and finance recommendation for a Chief Financial Officer, intended to inform a five-year vendor commitment at board level. Triage: CRITICAL, because a single five-year contract is hard to undo and the financial commitment is high for the organisation. Examined: question, answer, reasoning, perspective, applicability.\nCriteria: reversibility HIGH · impact scope MODERATE · financial commitment HIGH → two criteria at HIGH or above → CRITICAL.\n\nThe five levels of examination: question (what was actually asked) · answer (what the project says) · reasoning (how it gets there) · perspective (what it did not see) · applicability (what it looks like in the real world). Triage: the project's stakes, LOW, MODERATE, HIGH or CRITICAL, judged on reversibility, impact scope and financial commitment; it sets which levels are examined.\n\nIf this framing does not match your situation, say so, and the triage will be redone.\n\n## 2. What holds up\nThe recommendation names one vendor, one start date and one contract length: each can be checked against the offers. A review of what stands, not an endorsement of its content.\n\n## 3. What deserves scrutiny\n\nNote on reasoning: an AI model does not reason in the human sense; the reasoning checks below test logical consistency, not the process that produced the project.\n\n**Pre-mortem: three plausible causes of failure · Impact: CRITICAL**\nObserved: the memo gives no scenario in which the consolidation fails.\nEffect on the decision: three plausible causes are left unexamined: prices rise after year one, a workload cannot move in time, the single vendor's service degrades with no way out.\nTo check: for each cause, what the contract says and who in the organisation would see it coming.\n\n**Exit cost not quantified · Impact: HIGH**\nObserved: the memo proposes a single five-year contract without quantifying what leaving it would cost.\nEffect on the decision: if the price rises after the first year, that cost weighs on the board's decision.\nTo check: ask procurement for the exit cost of each offer, year by year.\n\n**Prices for years 2 to 5 not given · Impact: HIGH**\nObserved: \"a 22% discount in year one\" supports \"savings are estimated at EUR 1.4M over five years\".\nEffect on the decision: a discount limited to year one says nothing about years two to five, where most of the contract value lies.\nTo check: the price schedule for every year of the contract, in the draft contract itself.\n\n## 4. Assumptions the project relies on\n1. Prices after year one stay close to year one. If they rise, the EUR 1.4M saving does not hold. → Who can verify: procurement, with the full price schedule.\n2. All workloads can move before the current contracts end. If not, two vendors are paid at the same time. → Who can verify: the CIO.\n3. The vendor's migration support covers the work the teams would otherwise do. If not, the internal cost is missing from the saving. → Who can verify: the CIO, with the heads of the teams concerned.\n4. One point of contact is enough for three former vendors' services. If not, service levels drop during the first year. → Who can verify: the head of IT operations.\n\n## 5. Questions before you decide\n1. What does leaving the contract cost if the price rises after the first year? Owner: procurement\n2. What are the prices for years 2 to 5 of each offer? Owner: procurement\n3. Which workloads cannot move before the current contracts end? Owner: CIO\n4. What internal effort does the migration need, beyond the vendor's support? Owner: CIO\n5. Which service levels does the contract guarantee, and what happens if they are missed? Owner: head of IT operations\n6. Who will answer to the board if the saving is not there in year three?\n\nNo verdict. The decision is yours."
+  },
+  "proof": {
+    "fingerprint": {
+      "alg": "sha-256",
+      "profile": "riftveil-report-v1",
+      "value": "44ad2fc8676594a6105c621a93dd051de1648c47253351689c8b7f24f84689d9"
+    },
+    "seal": {
+      "value": "S1-REQ8-RW0G-J013-M23D-C969-73JZ-MF93-1W6J",
+      "verify": "https://riftveil.ai/api/verify"
+    },
+    "signature": {
+      "alg": "ed25519",
+      "key": "ed25519-1",
+      "value": "RLk8n-uArHiModfTXjm3Inw8iWm4zVQAMPYczqz-pRtfVx_Z3vbBmV2hQrsdpme4TCZtanhr_mUfWOttBsPsDQ",
+      "keys": "https://attestscope.ai/test-keys.json"
+    }
+  },
+  "follow_up": {
+    "profile": "riftveil-decision-v2",
+    "verified_by": {
+      "last_name": "Lambert",
+      "first_name": "Elena",
+      "role": "Chief Financial Officer"
+    },
+    "checked": "The prices for years 2 to 5 of the three offers, with procurement. Exit-cost analysis received from Daniel Murphy on 28 October and presented to the board: exit capped at six months of fees.",
+    "questions": [
+      {
+        "n": 1,
+        "question": "What does leaving the contract cost if the price rises after the first year?",
+        "suggested_owner": "procurement",
+        "assigned_to": "Daniel Murphy, Head of Procurement"
+      },
+      {
+        "n": 2,
+        "question": "What are the prices for years 2 to 5 of each offer?",
+        "suggested_owner": "procurement",
+        "assigned_to": ""
+      },
+      {
+        "n": 3,
+        "question": "Which workloads cannot move before the current contracts end?",
+        "suggested_owner": "CIO",
+        "assigned_to": ""
+      },
+      {
+        "n": 4,
+        "question": "What internal effort does the migration need, beyond the vendor's support?",
+        "suggested_owner": "CIO",
+        "assigned_to": ""
+      },
+      {
+        "n": 5,
+        "question": "Which service levels does the contract guarantee, and what happens if they are missed?",
+        "suggested_owner": "head of IT operations",
+        "assigned_to": ""
+      },
+      {
+        "n": 6,
+        "question": "Who will answer to the board if the saving is not there in year three?",
+        "suggested_owner": "",
+        "assigned_to": ""
+      }
+    ],
+    "decision": "conditions",
+    "conditions": "Contract signed only after the exit-cost analysis, presented to the board.",
+    "place": "",
+    "signature": {
+      "method": "drawn",
+      "typed": "",
+      "image": "data:image/png;base64,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"
+    },
+    "final_document": {
+      "name": "Board memo - cloud contract.pdf",
+      "size": 103,
+      "sha256": "2df7e602ebf9f09606a0a9f30bd6ea852065c216793b99f2797707aeb512e54d"
+    },
+    "previous": {
+      "profile": "riftveil-decision-v2",
+      "verified_by": {
+        "last_name": "Lambert",
+        "first_name": "Elena",
+        "role": "Chief Financial Officer"
+      },
+      "checked": "The prices for years 2 to 5 of the three offers, with procurement.",
+      "questions": [
+        {
+          "n": 1,
+          "question": "What does leaving the contract cost if the price rises after the first year?",
+          "suggested_owner": "procurement",
+          "assigned_to": "Daniel Murphy, Head of Procurement"
+        },
+        {
+          "n": 2,
+          "question": "What are the prices for years 2 to 5 of each offer?",
+          "suggested_owner": "procurement",
+          "assigned_to": ""
+        },
+        {
+          "n": 3,
+          "question": "Which workloads cannot move before the current contracts end?",
+          "suggested_owner": "CIO",
+          "assigned_to": ""
+        },
+        {
+          "n": 4,
+          "question": "What internal effort does the migration need, beyond the vendor's support?",
+          "suggested_owner": "CIO",
+          "assigned_to": ""
+        },
+        {
+          "n": 5,
+          "question": "Which service levels does the contract guarantee, and what happens if they are missed?",
+          "suggested_owner": "head of IT operations",
+          "assigned_to": ""
+        },
+        {
+          "n": 6,
+          "question": "Who will answer to the board if the saving is not there in year three?",
+          "suggested_owner": "",
+          "assigned_to": ""
+        }
+      ],
+      "decision": "conditions",
+      "conditions": "Contract signed only after the exit-cost analysis, presented to the board.",
+      "place": "",
+      "signature": {
+        "method": "drawn",
+        "typed": "",
+        "image": "data:image/png;base64,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"
+      },
+      "decided_at": "2026-10-26T16:05:12Z",
+      "proof": {
+        "fingerprint": {
+          "alg": "sha-256",
+          "profile": "riftveil-decision-v2",
+          "value": "2fd3a2ae0b4685c971c0cb7e780bf97736d02ff3f25f3e42ad953cfa180115c2"
+        },
+        "seal": {
+          "value": "S1-SP2R-M6Z9-3Y27-M5MB-YB16-57G7-MX47-8GFY",
+          "sealed_at": "2026-10-26T16:05:12Z",
+          "verify": "https://riftveil.ai/api/verify"
+        },
+        "signature": {
+          "alg": "ed25519",
+          "key": "ed25519-1",
+          "value": "H0tFeR7Q-VELQlHZEsR9AkvBDaKZmP2Obc7CuPehNrHaA5XHmRtrPcSsOHsPStb1MU6BcQKTS8MVWHaKDlUmAw",
+          "keys": "https://attestscope.ai/test-keys.json"
+        }
+      }
+    },
+    "decided_at": "2026-10-28T09:41:27Z",
+    "proof": {
+      "fingerprint": {
+        "alg": "sha-256",
+        "profile": "riftveil-decision-v2",
+        "value": "137a5d48553a886223ef5392e910d1e16e7d46aebb82e5fa8bef058963ff7522"
+      },
+      "seal": {
+        "value": "S1-30WH-D58W-8MVE-6G4Y-8KSE-30J0-G3YC-RX4S",
+        "sealed_at": "2026-10-28T09:41:27Z",
+        "verify": "https://riftveil.ai/api/verify"
+      },
+      "signature": {
+        "alg": "ed25519",
+        "key": "ed25519-1",
+        "value": "Nk-dIGehodcncNA9pOvyC3KMAjeoXkHQIEggGaVoZAobxLkHL8FmUMYx61uwYrl560NvoV0pVAAgerL-cWvsCQ",
+        "keys": "https://attestscope.ai/test-keys.json"
+      }
+    }
+  },
+  "notice": "Illustrative record. People, organisations and amounts are fictitious. The prefix XT is reserved for tests: the seals use the public test key assay-test-key-1 and the signatures the public Ed25519 test key of docs/test-vectors.json; they are never valid at riftveil.ai. The final document is a short text given in docs/test-vectors.json."
+}

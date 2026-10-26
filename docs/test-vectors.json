@@ -81,6 +81,70 @@
       "sealed_at": "2026-01-01T00:05:00Z",
       "hmac_input": "riftveil-decision-v1|XT-260101-000000-0000-0000-0000|bfdb75b1260feca991f6f59862c3cdc7e3910f424612244e9fdeb999a951d82e|2026-01-01T00:05:00Z",
       "seal": "S1-FEK5-BRSD-MC99-S95R-2V46-C40R-CHYM-ARK2"
+    },
+    {
+      "name": "V5 · Ed25519 signature of V1 (AttestScope 0.1.1)",
+      "message": "riftveil-seal-v1|XT-260101-000000-0000-0000-0000|abc5ba903a307668121b1fdd0e01ce784069189c1b255e481f65f5e54ee765fc",
+      "signature": "2jKXUE5glnWjDwQg-u4d6-GiOJKflAYbj3lgjDrsqunL4gs6TOentYbyUpIbbFX7IYIZ2qGmHYvVtpVAyI9BDg"
+    },
+    {
+      "name": "V6 · follow-up (riftveil-decision-v2), completes V4, with a final document",
+      "follow_up": {
+        "verified_by": {
+          "last_name": "Doe",
+          "first_name": "Jane",
+          "role": "CFO"
+        },
+        "checked": "Figures re-checked. Exit clause confirmed.",
+        "questions": [
+          {
+            "n": 1,
+            "question": "Q?",
+            "suggested_owner": "CFO",
+            "assigned_to": "John Roe"
+          }
+        ],
+        "decision": "conditions",
+        "conditions": "Exit clause first.",
+        "place": "",
+        "signature": {
+          "method": "typed",
+          "typed": "Jane Doe",
+          "image": ""
+        },
+        "final_document": {
+          "name": "memo.txt",
+          "size": 33,
+          "sha256": "94fc543669bc7ff65ed10f1dca31069669a92875d8ba2167123c70d0f1f2b042"
+        }
+      },
+      "final_document_bytes": "Final document of test vector V6.",
+      "previous": {
+        "fingerprint": "bfdb75b1260feca991f6f59862c3cdc7e3910f424612244e9fdeb999a951d82e",
+        "seal": "S1-FEK5-BRSD-MC99-S95R-2V46-C40R-CHYM-ARK2",
+        "sealed_at": "2026-01-01T00:05:00Z"
+      },
+      "report_fingerprint": "abc5ba903a307668121b1fdd0e01ce784069189c1b255e481f65f5e54ee765fc",
+      "input": "{\"v\":2,\"id\":\"XT-260101-000000-0000-0000-0000\",\"report_fingerprint\":\"abc5ba903a307668121b1fdd0e01ce784069189c1b255e481f65f5e54ee765fc\",\"verified_by\":{\"last_name\":\"Doe\",\"first_name\":\"Jane\",\"role\":\"CFO\"},\"checked\":\"Figures re-checked. Exit clause confirmed.\",\"questions\":[{\"n\":1,\"question\":\"Q?\",\"suggested_owner\":\"CFO\",\"assigned_to\":\"John Roe\"}],\"decision\":\"conditions\",\"conditions\":\"Exit clause first.\",\"place\":\"\",\"signature\":{\"method\":\"typed\",\"typed\":\"Jane Doe\",\"image\":\"\"},\"final_document\":{\"name\":\"memo.txt\",\"size\":33,\"sha256\":\"94fc543669bc7ff65ed10f1dca31069669a92875d8ba2167123c70d0f1f2b042\"},\"previous\":{\"fingerprint\":\"bfdb75b1260feca991f6f59862c3cdc7e3910f424612244e9fdeb999a951d82e\",\"seal\":\"S1-FEK5-BRSD-MC99-S95R-2V46-C40R-CHYM-ARK2\",\"sealed_at\":\"2026-01-01T00:05:00Z\"}}",
+      "fingerprint": "2f283adb5660de3e785220c90a27a7eb9abe43fb310dffbdda579d6b2f87b817",
+      "label": "riftveil-decision-v1",
+      "sealed_at": "2026-01-02T09:00:00Z",
+      "hmac_input": "riftveil-decision-v1|XT-260101-000000-0000-0000-0000|2f283adb5660de3e785220c90a27a7eb9abe43fb310dffbdda579d6b2f87b817|2026-01-02T09:00:00Z",
+      "seal": "S1-JZHS-ME8Y-5A25-4S9Z-7YBJ-HMYE-7J26-B9AT",
+      "signature": "kWyKO9MpoYuqXmawQUVZZH__4k3rWgWIyHo5mTNIB3w_mIiZqTLRv4sEAn4GGnbBWt5BUPn7jhNwt95aa8nTCw"
     }
-  ]
+  ],
+  "ed25519_test_key": {
+    "id": "ed25519-1",
+    "seed_hex": "9c889f95255ecb97a41a626e87d88926a3d07f0cdc30f18664c24b1e7c7fa60c",
+    "pkcs8_base64": "MC4CAQAwBQYDK2VwBCIEIJyIn5UlXsuXpBpibofYiSaj0H8M3DDxhmTCSx58f6YM",
+    "public_key": "2FLWc-QnkT78GPsymtkuE5xgzIMLCHzigAAgOs6D2TY",
+    "note": "Public test key, published on purpose: the seed is SHA-256(\"attestscope-test-ed25519-1\"). Signatures made with it are never valid for a decision."
+  },
+  "elena_final_document": {
+    "file": "examples/elena-lambert.json",
+    "name": "Board memo - cloud contract.pdf",
+    "text": "Illustrative final document of the AttestScope example: board memo on the cloud contract, version sent.",
+    "note": "The bytes of this UTF-8 text stand for the PDF in the example."
+  }
 }
