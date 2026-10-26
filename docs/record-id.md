@@ -66,7 +66,7 @@ A valid signature shows that the holder of the issuer's private key signed this 
 
 ## 6. Public keys
 
-The issuer MUST publish its public keys in a key list, at a fixed address named by `keys` in each signature, and SHOULD publish the same list in at least two other places it does not host on the same server. Riftveil: `https://riftveil.ai/keys.json`, the AttestScope specification repository on GitHub, and attestscope.ai.
+The issuer MUST publish its public keys in a key list, at a fixed address named by `keys` in each signature, and SHOULD publish the same list in at least two other places it does not host on the same server. Riftveil: `https://riftveil.ai/keys.json`, `keys/riftveil.json` in the AttestScope specification repository on GitHub, and `https://attestscope.ai/keys/riftveil.json`.
 
 ```json
 {

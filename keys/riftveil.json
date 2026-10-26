@@ -1,0 +1,16 @@
+{
+  "issuer": "RV",
+  "updated": "2026-10-26",
+  "rules": "AttestScope 0.1.1, section 6. No key is ever removed from this list. A compromised key stays on it, marked compromised and dated. The same list is published at https://riftveil.ai/keys.json, in the AttestScope specification repository on GitHub (keys/riftveil.json) and at https://attestscope.ai/keys/riftveil.json.",
+  "keys": [
+    {
+      "id": "ed25519-1",
+      "alg": "ed25519",
+      "public_key": "mXsyppiuIh7dKkUYGBoM8Z-6yy0siGb_xJkqZtr7u6I",
+      "status": "active",
+      "valid_from": "2026-10-26",
+      "valid_until": null,
+      "compromised_at": null
+    }
+  ]
+}
