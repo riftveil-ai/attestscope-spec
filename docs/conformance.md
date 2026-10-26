@@ -30,7 +30,8 @@ An issuer assigns IDs, seals and signs:
 7. MUST publish a verification endpoint that answers valid or not valid, the origin, and for a follow-up the seal time, for fingerprints only, and stores nothing.
 8. MUST NOT keep the texts, a list of IDs or a list of fingerprints for verification purposes.
 9. MUST check the seal of the report before sealing a follow-up.
-10. SHOULD rate-limit sealing and registration, and SHOULD protect them against automated abuse.
+10. MUST keep its signing key out of every test or preview deployment reachable by others, and MUST NOT sign later a report dated after it started signing.
+11. SHOULD rate-limit sealing, signing and registration, fail closed when its counters are unavailable, and protect them against automated abuse.
 
 ## Verifier
 
@@ -45,5 +46,7 @@ A tool that verifies record files:
 7. MUST show the sealed texts so that a person can compare them with the document they were given.
 8. MUST compute the fingerprint of a presented final document on the person's device, and MUST NOT send the document.
 9. MUST NOT present a check of the ID, fingerprint and seal alone as a verification of a document.
-10. MUST still verify version 0.1 files, which carry no signature.
-11. SHOULD state in its result that a valid record proves provenance and integrity, never that a decision was right.
+10. MUST still verify version 0.1 files, which carry no signature, and MUST reject one whose ID is dated after the issuer started signing.
+11. MUST reject a file whose `issued_at` differs from the time of its `record_id`, a non-canonical signature encoding, and a record whose prefix is `XT` when it is presented for a decision, and MUST show a signature made after the date of the record as such.
+12. MUST NOT present the name in a follow-up as verified.
+13. SHOULD state in its result that a valid record proves provenance and integrity, never that a decision was right.

@@ -56,11 +56,11 @@ Since version 0.1.1, the issuer also signs each message it seals, with a public-
 
 - **Algorithm.** Ed25519 (RFC 8032), pure, without pre-hashing.
 - **Message.** Exactly the message of the seal (section 4), byte for byte, in UTF-8. The signature therefore covers the same ID, fingerprint, origin and, for a follow-up, seal time.
-- **Encoding.** The 64-byte signature in base64url (RFC 4648, section 5), without padding: 86 characters.
+- **Encoding.** The 64-byte signature in base64url (RFC 4648, section 5), without padding: 86 characters. Only the canonical encoding is valid: a verifier MUST reject a value whose last character carries non-zero spare bits. Neither the signature nor the seal may be used as an identifier.
 - **Field.** `proof.signature` in the record, `follow_up.proof.signature` in the follow-up: `{ "alg": "ed25519", "key": "<key id>", "value": "<base64url>", "keys": "<URL of the key list>" }`. `keys` is informative: anyone can write a file, so a verifier MUST NOT use it to choose the key list (section 6).
 - **Required.** A 0.1.1 file MUST carry `proof.signature`, and a sealed follow-up of a 0.1.1 file MUST carry `follow_up.proof.signature`. An issuer that has no signing key writes version 0.1 files.
-- **Private key.** It MUST be created and kept by the issuer in a secret store, never in code, a shared file or a conversation. It MUST NOT be the sealing key.
-- **Signing again.** An issuer MAY sign again, at a later time, a message whose seal it has just checked. With the same key, Ed25519 gives the same bytes; after a key change, the new signature is made with the active key. This lets a record sealed before the issuer signed (version 0.1), or a follow-up added later, become a 0.1.1 record.
+- **Private key.** It MUST be created and kept by the issuer in a secret store, never in code, a shared file or a conversation. It MUST NOT be the sealing key. It MUST be available only to the production service of the issuer, never to test or preview deployments reachable by others; an issuer SHOULD also bind signing to its production host name.
+- **Signing later (countersignature).** An issuer MAY sign, at a later time, the message of a report whose seal it has just checked, only when the record is dated before the issuer started signing (`valid_from` of its first key). This lets a 0.1 record become a 0.1.1 record when a follow-up is added. A verifier MUST show such a signature as made after the date of the record. An issuer MUST NOT sign later a report dated after it started signing: such a record already carries its signature, so a stolen sealing key cannot be turned into new signatures for it.
 
 A valid signature shows that the holder of the issuer's private key signed this message. It says nothing more than the seal, and nothing less: it concerns date and integrity, never the substance.
 
@@ -100,7 +100,8 @@ Rules of the list:
 
 1. No key is ever removed from the list. A retired key stays, with its dates.
 2. A compromised key stays on the list, marked `compromised` and dated. A verifier MUST NOT report a signature made with it as valid on its own, whatever its date; the record then needs other evidence (a time stamp, a register).
-5. A verifier SHOULD warn when the time of a record (the time in its ID, or `sealed_at` for a follow-up) is outside `valid_from` and `valid_until` of the key that signed it.
+5. A verifier MUST show when the time of a record (the time in its ID, or `sealed_at` for a follow-up) is before `valid_from` of the key that signed it (a signature made later, see section 5), and MUST NOT report as valid a signature over a record dated after `valid_until`.
+6. A verifier MUST NOT accept, as a valid record of this issuer, an unsigned file (version 0.1) whose ID is dated after the issuer started signing: its signature has been removed.
 3. The three published copies MUST be identical. A verifier that finds a difference MUST NOT rely on the list.
 4. The issuer keeps checking its HMAC seals with every sealing key for at least twelve months after announcing that it will stop checking them.
 

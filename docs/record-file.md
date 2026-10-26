@@ -24,6 +24,7 @@ AttestScope Protocol · version 0.1.1. One JSON file per record, UTF-8, named `<
 | Field | Rule |
 |---|---|
 | `format`, `version` | `"attestscope"` and `"0.1.1"`. Files of version 0.1 read `"assay-record"` and `"0.1-draft"`; they stay valid and every verifier MUST still read them. |
+| `issued_at` | MUST repeat the date and time of the `record_id`. A verifier MUST reject a file where they differ, and a record whose ID is dated in the future. |
 | `origin` | `generated` (the issuer produced the report) or `registered` (produced elsewhere, only its fingerprint was sent). Covered by the seal and the signature through their label. |
 | `assessment` | For `riftveil-report-v1`, `protocol` and `model` are in the fingerprint. For `riftveil-content-v1`, `assistant` is. `language` is informative. |
 | `content` | The exact texts. They stay with the person who holds the file; the issuer keeps nothing. |
@@ -80,5 +81,6 @@ Filled in by the person who decides, never by a model, after the report. It has 
 | `proof.seal` | Issued by the issuer on the follow-up fingerprint and the issuer's clock (`sealed_at`); it requires a valid seal of the assessment. Only fingerprints are sent: names, decision, signature and documents never leave the signer's device. |
 | `proof.signature` | REQUIRED when the follow-up of a 0.1.1 file is sealed. The issuer's Ed25519 signature over the same message as the follow-up seal. |
 | Unsealed follow-up | Allowed. A verifier shows it as present but unsealed: nothing proves when it was written or that it was not changed. |
+| Who wrote it | Not proven. Anyone who holds the record file can seal a follow-up for it, under any name, and several follow-ups can exist for one report. The seal and the issuer's signature prove when a follow-up existed and that it has not changed since; identity needs the organisation's account or a qualified signature (planned). A verifier MUST NOT present the name in a follow-up as verified. |
 
 Later versions will add `outcome` (what became of the decision) and `readers[]` (the chain of second readers), each with its own fingerprint.
