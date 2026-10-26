@@ -51,7 +51,7 @@ assert report_fingerprint(f) == f["proof"]["fingerprint"]["value"], "content alt
 
 ## 2. Check the signature with the public key
 
-Version 0.1.1. The signature is Ed25519 over the seal message; anyone can check it with the issuer's published key list, without asking the issuer.
+Version 0.1.1. The signature is Ed25519 over the seal message; anyone can check it with the issuer's published key list, without asking the issuer. Take the key list from the address registered for the issuer's prefix in [ISSUERS](../ISSUERS.md), never from `proof.signature.keys`: that field is written in the file, so a forged file could point to a forged list.
 
 JavaScript (recent browsers, Node 20+):
 
@@ -59,7 +59,10 @@ JavaScript (recent browsers, Node 20+):
 const b64u = (s) => Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0));
 const label = file.origin === "registered" ? "riftveil-register-v1" : "riftveil-seal-v1";
 const message = label + "|" + file.record_id + "|" + fingerprint;   // fingerprint recomputed in step 1
-const list = await (await fetch(file.proof.signature.keys)).json();
+const KEY_LISTS = { RV: "https://riftveil.ai/keys.json" };            // registered addresses, see ISSUERS
+const listUrl = KEY_LISTS[file.record_id.split("-")[0]];
+if (!listUrl) throw new Error("unknown issuer");
+const list = await (await fetch(listUrl)).json();
 const k = list.keys.find((x) => x.id === file.proof.signature.key && x.alg === "ed25519");
 if (!k || k.status === "compromised") throw new Error("key unknown or compromised");
 const pub = await crypto.subtle.importKey("raw", b64u(k.public_key), { name: "Ed25519" }, false, ["verify"]);
@@ -75,10 +78,13 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
 
 def b64u(s): return base64.urlsafe_b64decode(s + "=" * (-len(s) % 4))
 
+KEY_LISTS = {"RV": "https://riftveil.ai/keys.json"}  # registered addresses, see ISSUERS
+
+fingerprint = report_fingerprint(f)  # recomputed in step 1 (for a registered report, use its own profile)
 label = "riftveil-register-v1" if f["origin"] == "registered" else "riftveil-seal-v1"
 message = label + "|" + f["record_id"] + "|" + fingerprint
 sig = f["proof"]["signature"]
-keys = json.load(urllib.request.urlopen(sig["keys"]))["keys"]
+keys = json.load(urllib.request.urlopen(KEY_LISTS[f["record_id"].split("-")[0]]))["keys"]
 k = next(k for k in keys if k["id"] == sig["key"] and k["alg"] == "ed25519")
 assert k["status"] != "compromised", "key compromised"
 Ed25519PublicKey.from_public_bytes(b64u(k["public_key"])).verify(b64u(sig["value"]), message.encode("utf-8"))  # raises if not valid
@@ -149,4 +155,4 @@ The host page's Content-Security-Policy must allow `script-src` and `connect-src
 
 ## 7. Become an issuer
 
-Register a prefix in [ISSUERS](#issuers) (prefix, name, contact, verification endpoint, address of the key list), publish your fingerprint profiles if you add any, create your signing key yourself and keep it, like your sealing key, in a secret store, publish your key list, and follow the issuer rules of [Conformance](#conformance).
+Register a prefix in [ISSUERS](../ISSUERS.md) (prefix, name, contact, verification endpoint, address of the key list), publish your fingerprint profiles if you add any, create your signing key yourself and keep it, like your sealing key, in a secret store, publish your key list, and follow the issuer rules of [Conformance](conformance.md).

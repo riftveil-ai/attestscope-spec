@@ -21,8 +21,8 @@ A tool that writes record files:
 
 An issuer assigns IDs, seals and signs:
 
-1. MUST use a prefix registered in [ISSUERS](#issuers), and MUST NOT issue records under `XT` for real decisions.
-2. MUST assign IDs by code, in the format of [Record ID, seal and signature](#record-id-seal-and-signature), from a clock synchronised with a public time source.
+1. MUST use a prefix registered in [ISSUERS](../ISSUERS.md), and MUST NOT issue records under `XT` for real decisions.
+2. MUST assign IDs by code, in the format of [Record ID, seal and signature](record-id.md), from a clock synchronised with a public time source.
 3. MUST keep its sealing keys and its signing keys in a secret store, as separate keys, number them, and keep retired sealing keys available for verification.
 4. MUST use one label per origin and one for the follow-up.
 5. MUST sign every message it seals in a 0.1.1 record, with the private key of an active key of its published list.
@@ -38,7 +38,7 @@ A tool that verifies record files:
 
 1. MUST recompute every fingerprint from the file, following its profile, and MUST NOT trust a fingerprint as written.
 2. MUST report "altered" when a recomputed fingerprint differs from the one in the file, and stop there for that part.
-3. MUST check each signature of a 0.1.1 file with the issuer's published key list, MUST report a missing signature as not valid, and MUST NOT report a signature made with a key marked compromised as valid on its own.
+3. MUST check each signature of a 0.1.1 file with the issuer's published key list, taken from the address registered for the prefix (never from the file), MUST report a missing signature as not valid, and MUST NOT report a signature made with a key marked compromised as valid on its own.
 4. MUST ask the issuer's endpoint to check each seal, sending only the ID, fingerprints, seals and seal times, when the issuer can be reached.
 5. MUST report the origin returned by the issuer, and "forged origin" when it differs from the one the file states.
 6. MUST verify each earlier follow-up under `previous` and report its result separately.

@@ -52,7 +52,7 @@
     ],
     "decision": "conditions",
     "conditions": "Exit clause capped at six months of fees before signature.",
-    "place": "Brussels",
+    "place": "Head office",
     "signature": {
       "method": "typed",
       "typed": "Claire Martin",
@@ -63,7 +63,7 @@
       "fingerprint": {
         "alg": "sha-256",
         "profile": "riftveil-decision-v1",
-        "value": "ab99fe11d917d7937d51695d1da49db60437f14ed48ff9df8f552c94b595f5eb"
+        "value": "7e4a48b9583384ec009a05ac72943cc93b42def7e44a57179b1edc3913c8a10b"
       },
       "seal": {
         "value": "S1-7M5T-CP2P-HT9Q-MXVV-A6ZJ-9CPM-YGCX-AX1S",

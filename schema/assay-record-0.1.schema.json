@@ -1,8 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://assayrecord.ai/schema/assay-record-0.1.schema.json",
-  "title": "Assay Record proof file, draft 0.1",
-  "description": "One record per file. The fingerprints are recomputed by every verifier from the content; they are never trusted as written. See https://assayrecord.ai/spec.html",
+  "$id": "https://attestscope.ai/schema/assay-record-0.1.schema.json",
+  "$comment": "Copyright 2026 Olivier Laurent. Licensed under the Apache License, Version 2.0 (SPDX-License-Identifier: Apache-2.0). You may not use this file except in compliance with the License. A copy is at https://www.apache.org/licenses/LICENSE-2.0. Distributed on an AS IS basis, without warranties or conditions of any kind.",
+  "title": "AttestScope record file, draft 0.1",
+  "description": "One record per file. The fingerprints are recomputed by every verifier from the content; they are never trusted as written. See https://attestscope.ai/spec.html",
   "type": "object",
   "required": ["format", "version", "record_id", "issuer", "origin", "issued_at", "content", "proof"],
   "properties": {

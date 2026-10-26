@@ -15,7 +15,7 @@ AttestScope Protocol · version 0.1.1.
 | Document changed after the decision | `final_document.sha256`, compared on the reader's device | Only when the follow-up names the document and the document is presented |
 | Seal time moved | The time is inside the sealed and signed message | None |
 | Forged seal | HMAC-SHA256 truncated to 160 bits, secret key | Only the issuer can check a seal: the signature covers the same message |
-| Forged signature | Ed25519, private key in a secret store | None known |
+| Forged signature | Ed25519, private key in a secret store; the key list is taken from the address registered for the issuer, never from the file | None known |
 | Issuer unreachable or gone | The signature is checked with the published key list | The list must stay published; it is published in three places |
 | Stolen sealing key | Secret store, numbered keys, rotation; separate signing key | Seals made with a stolen key cannot be told apart; the signature still holds |
 | Stolen signing key | Secret store, numbered keys; the key is marked compromised and dated, never removed | Signatures made with it no longer prove anything on their own; a time stamp by a third party, or a register, is then needed |

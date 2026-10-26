@@ -6,11 +6,11 @@ A record is verified on its **record file**, never on a printout, a screenshot o
 
 1. Recompute the fingerprint from the content of the record file, following its profile.
 2. If it differs from the fingerprint written in the file: **content altered**. Stop.
-3. **Signature** (version 0.1.1). Fetch the issuer's key list (`proof.signature.keys`), find the key named by `proof.signature.key`, and check the Ed25519 signature over the seal message, built from the recomputed fingerprint and the origin the file states. Not valid, missing, or made with a key absent from the list: **signature not valid**. Made with a key marked `compromised`: **key compromised**, not valid on its own. This step needs nobody's answer: the issuer is not asked.
+3. **Signature** (version 0.1.1). Take the issuer's key list from the address registered for the prefix of the `record_id` ([`ISSUERS.md`](../ISSUERS.md); Riftveil: `https://riftveil.ai/keys.json`), never from `proof.signature.keys`, which is written in the file. Find the key named by `proof.signature.key`, and check the Ed25519 signature over the seal message, built from the recomputed fingerprint and the origin the file states. Not valid, missing, or made with a key absent from the list: **signature not valid**. Made with a key marked `compromised`: **key compromised**, not valid on its own. This step needs nobody's answer: the issuer is not asked.
 4. **Seal.** Send `{ id, fingerprint (recomputed), seal }` to the issuer's endpoint. If the seal is not valid: **not issued**. If it is valid for another origin than the one the file states: **forged origin**. Stop.
 5. Otherwise: **valid**. Show the content of the file and ask the person to compare it with the document they were given. If they differ, the document was altered, whatever it says.
 6. If the file holds a `follow_up`: recompute its fingerprint (it includes the report fingerprint recomputed in step 1). Different: **follow-up altered**. No seal: **follow-up present, not sealed**. Otherwise check its signature as in step 3, over the follow-up message (with `sealed_at`), and send it with the request of step 4 as `decision: { fingerprint, seal, sealedAt }`; the answer adds `decision: { valid, sealedAt }`.
-7. If the follow-up holds `previous`: verify each earlier follow-up the same way, down the chain. An earlier follow-up that is altered, not valid, or sealed after the one that completes it is reported as such; the follow-up that completes it stays valid, since its fingerprint covers only the earlier proof.
+7. If the follow-up holds `previous`: verify each earlier follow-up the same way, down the chain, including its signature when it is a 0.1.1 follow-up. An earlier follow-up that is altered, not valid, badly signed, or not sealed strictly before the one that completes it is reported as such; the follow-up that completes it stays valid, since its fingerprint covers only the earlier proof. A verifier MAY stop after 20 earlier follow-ups and report the file as not conforming.
 8. If the follow-up holds `final_document`: when a person presents a document, compute the SHA-256 of its bytes on their device and compare it with `final_document.sha256`. Equal: **this is the document that was decided**. Different: **not the document that was decided**.
 
 Steps 3 and 4 answer the same question in two ways: the signature with the public key, by anyone; the seal by the issuer. A verifier without network access to the issuer can still check the signature, with a copy of the key list.
@@ -21,7 +21,7 @@ Checking the three values alone (ID, fingerprint, seal) only proves that they be
 
 | Endpoint | Body | Answer |
 |---|---|---|
-| `POST https://riftveil.ai/api/verify` | `{ id, fingerprint, seal, signature?, decision? }` | `{ valid: true, id, issuedAt, origin, signature?, decision? }` or `{ valid: false }` |
+| `POST https://riftveil.ai/api/verify` | `{ id, fingerprint, seal, signature?, decision? }` | `{ valid: true, id, issuedAt, origin, signature?, decision? }` or `{ valid: false }`; `signature` is `{ valid, key, status?, reason? }`, and a key marked compromised always gives `valid: false` |
 | `POST https://riftveil.ai/api/register` | `{ fingerprint, profile: "riftveil-content-v1" }` | `{ id, seal, signature, issuedAt, origin: "registered", profile }` |
 | `POST https://riftveil.ai/api/decide` | `{ id, report_fingerprint, report_seal, fingerprint }` | `{ seal, sealedAt, origin, signature, report_signature }` |
 | `GET https://riftveil.ai/keys.json` | | The key list (section 6 of [Record ID, seal and signature](record-id.md#6-public-keys)) |
@@ -32,7 +32,7 @@ Checking the three values alone (ID, fingerprint, seal) only proves that they be
 
 - `https://riftveil.ai/verify.html` (FR: `/fr/verify.html`): verification by record file, or by the three values with a warning. The signature is checked in the browser with the public key; a final document can be compared there; "Complete the follow-up" reopens the record to add a follow-up that completes the earlier one.
 - `https://riftveil.ai/register.html` (FR: `/fr/register.html`): registration of a report produced elsewhere; the fingerprint is computed in the browser and the record file is downloaded; the follow-up can then be filled in and sealed, as for a report generated on riftveil.ai.
-- Widget for any page (it verifies the assessment, its signature and the follow-up seal; the follow-up itself is shown on riftveil.ai/verify):
+- Widget for any page (it verifies the assessment, its signature, and the seal and signature of the follow-up; earlier follow-ups and the follow-up itself are shown on riftveil.ai/verify, which is the full verifier):
 
 ```html
 <div data-riftveil-verify data-lang="fr"></div>

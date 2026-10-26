@@ -35,9 +35,9 @@ Pattern: `^[A-Z]{2,6}-\d{6}-\d{6}-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}-[0
 - At 1 million records a day for one issuer, the probability of a single duplicate is about 1 in 500 million per year. At 1,000 records per second, about 1 in 70,000 per year.
 - This is a probability, not a mathematical impossibility. An issuer that needs absolute uniqueness MAY also check each new ID against its own register and draw again on a match; it MUST NOT shorten the random part to do so.
 
-## 4. Seal (recommended)
+## 4. Seal
 
-An issuer SHOULD seal each record so that anyone can check, without the issuer storing anything, that the ID was issued by it for this content.
+An issuer MUST seal each record of version 0.1.1, so that it can confirm, without storing anything, that it issued the ID for this content. (In version 0.1 the seal was recommended.)
 
 - **Fingerprint.** SHA-256, in hexadecimal, of the content the issuer defines as the record content. The definition (profile) MUST be published and MUST include the ID whenever the issuer produced the content itself.
 - **Message.** `"<label>|" + id + "|" + fingerprint`, in UTF-8. For a follow-up: `"<label>|" + id + "|" + fingerprint + "|" + sealed_at`.
@@ -57,21 +57,22 @@ Since version 0.1.1, the issuer also signs each message it seals, with a public-
 - **Algorithm.** Ed25519 (RFC 8032), pure, without pre-hashing.
 - **Message.** Exactly the message of the seal (section 4), byte for byte, in UTF-8. The signature therefore covers the same ID, fingerprint, origin and, for a follow-up, seal time.
 - **Encoding.** The 64-byte signature in base64url (RFC 4648, section 5), without padding: 86 characters.
-- **Field.** `proof.signature` in the record, `follow_up.proof.signature` in the follow-up: `{ "alg": "ed25519", "key": "<key id>", "value": "<base64url>", "keys": "<URL of the key list>" }`.
+- **Field.** `proof.signature` in the record, `follow_up.proof.signature` in the follow-up: `{ "alg": "ed25519", "key": "<key id>", "value": "<base64url>", "keys": "<URL of the key list>" }`. `keys` is informative: anyone can write a file, so a verifier MUST NOT use it to choose the key list (section 6).
 - **Required.** A 0.1.1 file MUST carry `proof.signature`, and a sealed follow-up of a 0.1.1 file MUST carry `follow_up.proof.signature`. An issuer that has no signing key writes version 0.1 files.
 - **Private key.** It MUST be created and kept by the issuer in a secret store, never in code, a shared file or a conversation. It MUST NOT be the sealing key.
-- **Signing endpoint.** An issuer MAY sign again, at a later time, a message whose seal it has just checked: Ed25519 is deterministic, so the signature is the same bytes. This lets a record sealed before the issuer signed (version 0.1), or a follow-up added later, become a 0.1.1 record.
+- **Signing again.** An issuer MAY sign again, at a later time, a message whose seal it has just checked. With the same key, Ed25519 gives the same bytes; after a key change, the new signature is made with the active key. This lets a record sealed before the issuer signed (version 0.1), or a follow-up added later, become a 0.1.1 record.
 
 A valid signature shows that the holder of the issuer's private key signed this message. It says nothing more than the seal, and nothing less: it concerns date and integrity, never the substance.
 
 ## 6. Public keys
 
-The issuer MUST publish its public keys in a key list, at a fixed address named by `keys` in each signature, and SHOULD publish the same list in at least two other places it does not host on the same server. Riftveil: `https://riftveil.ai/keys.json`, `keys/riftveil.json` in the AttestScope specification repository on GitHub, and `https://attestscope.ai/keys/riftveil.json`.
+The issuer MUST publish its public keys in a key list, at a fixed address registered with its prefix in [`ISSUERS.md`](../ISSUERS.md), and SHOULD publish the same list in at least two other places it does not host on the same server. A verifier MUST take the key list from the address registered for the prefix of the `record_id` (or from a copy of that list it already trusts), never from the record file. Riftveil: `https://riftveil.ai/keys.json`, `keys/riftveil.json` in the AttestScope specification repository on GitHub, and `https://attestscope.ai/keys/riftveil.json`.
 
 ```json
 {
   "issuer": "RV",
   "updated": "2026-10-26",
+  "rules": "…",
   "keys": [
     {
       "id": "ed25519-1",
@@ -93,11 +94,13 @@ The issuer MUST publish its public keys in a key list, at a fixed address named 
 | `status` | `active` (signs today), `retired` (no longer signs; its signatures stay valid) or `compromised`. |
 | `valid_from`, `valid_until` | Dates (UTC) between which the key signed. `valid_until` is `null` while the key is active. |
 | `compromised_at` | For a compromised key: the date from which its private part may have been known to someone else. |
+| `issuer`, `updated`, `rules` | The issuer prefix, the date of the last change, and the rules of the list in plain words. Informative. |
 
 Rules of the list:
 
 1. No key is ever removed from the list. A retired key stays, with its dates.
-2. A compromised key stays on the list, marked `compromised` and dated. A verifier MUST NOT report a signature made with it as valid on its own; the record then needs other evidence (a time stamp, a register).
+2. A compromised key stays on the list, marked `compromised` and dated. A verifier MUST NOT report a signature made with it as valid on its own, whatever its date; the record then needs other evidence (a time stamp, a register).
+5. A verifier SHOULD warn when the time of a record (the time in its ID, or `sealed_at` for a follow-up) is outside `valid_from` and `valid_until` of the key that signed it.
 3. The three published copies MUST be identical. A verifier that finds a difference MUST NOT rely on the list.
 4. The issuer keeps checking its HMAC seals with every sealing key for at least twelve months after announcing that it will stop checking them.
 
